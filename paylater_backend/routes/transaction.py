@@ -42,17 +42,17 @@ router = APIRouter(
 
 
 @router.post('/pay', response_model=TransactionOut)
-def create_transaction(transaction: TransactionCreate, db: Session = Depends(get_db)):
+async def create_transaction(transaction: TransactionCreate, db: Session = Depends(get_db)):
     db_transaction = add_transaction(db, transaction.customer_id, transaction.merchant_id, transaction.amount)
     return db_transaction
 
 
 @router.post('/repay', response_model=TransactionOut)
-def create_repaid(repay_data: TransactionRepay, db: Session = Depends(get_db)):
+async def create_repaid(repay_data: TransactionRepay, db: Session = Depends(get_db)):
     db_transaction = pay_back(db, repay_data.transaction_id)
     return db_transaction
 
 
 @router.get('/')
-def read_transactions(db: Session = Depends(get_db)):
+async def read_transactions(db: Session = Depends(get_db)):
     return get_transactions(db)

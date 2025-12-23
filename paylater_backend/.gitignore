@@ -1,3 +1,13 @@
 /venv
 
 /__pycache__
+
+/.pytest_cache
+/db/__pycache__
+
+/service/__pycache__
+
+/routes/__pycache__
+
+/models/__pycache__
+

@@ -57,18 +57,18 @@ router = APIRouter(
 #     return db_customer
 
 @router.get('/',response_model=list[CustomerOut])
-def get_all_customer(db: Session = Depends(get_db)):
+async def get_all_customer(db: Session = Depends(get_db)):
     return get_customer(db)
 
 
 @router.post('/signup', response_model=CustomerOut)
-def signup(customer: CustomerSignUp, db: Session = Depends(get_db)):
+async def signup(customer: CustomerSignUp, db: Session = Depends(get_db)):
     hashed = hash_password(customer.password)
     db_customer = add_customer(db, customer.name, customer.phone, customer.limit, customer.email, hashed)
     return db_customer
 
 @router.post('/login', response_model=Token)
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     db_customer = db.query(Customer).filter(Customer.email == form_data.username).first()
     if not db_customer or not verify_password(form_data.password, db_customer.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -77,7 +77,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
 
 
-def get_current_customer(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+async def get_current_customer(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     payload = decode_access_token(token)
     if payload is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
@@ -87,7 +87,7 @@ def get_current_customer(token: str = Depends(oauth2_scheme), db: Session = Depe
     return customer
 
 @router.get('/protected')
-def secret_stuff(current_customer: Customer = Depends(get_current_customer)):
+async def secret_stuff(current_customer: Customer = Depends(get_current_customer)):
     return {
         "id": current_customer.id,
         "name": current_customer.name,
