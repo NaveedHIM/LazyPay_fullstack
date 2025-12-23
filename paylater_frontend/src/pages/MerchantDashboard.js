@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
+import { HiOutlineShoppingBag, HiOutlineDocumentText, HiOutlinePhone, HiOutlineCurrencyRupee, HiOutlineTrendingUp, HiOutlineCheckCircle, HiOutlineClock, HiOutlinePencil } from 'react-icons/hi';
 
 const MerchantDashboard = () => {
   const { user } = useAuth();
@@ -61,18 +62,36 @@ const MerchantDashboard = () => {
 
   return (
     <div>
-      <h1>Merchant Dashboard</h1>
+      <h1>
+        <HiOutlineShoppingBag style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+        Merchant Dashboard
+      </h1>
       
       <div className="dashboard">
         <div className="dashboard-card">
-          <h3>Merchants</h3>
+          <h3>
+            <HiOutlineShoppingBag style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Merchants
+          </h3>
           {merchants.map(merchant => (
             <div key={merchant.id} className="transaction-item">
               <div className="transaction-details">
-                <div><strong>{merchant.name}</strong></div>
-                <div>Phone: {merchant.phone}</div>
-                <div>Commission: {merchant.commision}%</div>
-                <div>Total Earnings: ₹{merchant.total_earning}</div>
+                <div>
+                  <HiOutlineShoppingBag style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+                  <strong>{merchant.name}</strong>
+                </div>
+                <div>
+                  <HiOutlinePhone style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+                  Phone: {merchant.phone}
+                </div>
+                <div>
+                  <HiOutlineTrendingUp style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+                  Commission: {merchant.commision}%
+                </div>
+                <div>
+                  <HiOutlineCurrencyRupee style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+                  Total Earnings: ₹{merchant.total_earning}
+                </div>
               </div>
               <div>
                 <input
@@ -87,6 +106,7 @@ const MerchantDashboard = () => {
                   onClick={() => handleCommissionUpdate(merchant.id, commission)}
                   disabled={updatingCommission || !commission}
                 >
+                  <HiOutlinePencil style={{ marginRight: '0.25rem' }} />
                   Update
                 </button>
               </div>
@@ -95,7 +115,10 @@ const MerchantDashboard = () => {
         </div>
 
         <div className="dashboard-card">
-          <h3>Recent Transactions</h3>
+          <h3>
+            <HiOutlineDocumentText style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Recent Transactions
+          </h3>
           <div className="transaction-list">
             {merchantTransactions.length === 0 ? (
               <p>No transactions yet</p>
@@ -103,12 +126,25 @@ const MerchantDashboard = () => {
               merchantTransactions.slice(0, 5).map(transaction => (
                 <div key={transaction.id} className="transaction-item">
                   <div className="transaction-details">
-                    <div>Transaction #{transaction.id}</div>
+                    <div>
+                      <HiOutlineDocumentText style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+                      Transaction #{transaction.id}
+                    </div>
                     <div>Amount: ₹{transaction.amount}</div>
                     <div>Date: {new Date(transaction.timestamp).toLocaleDateString()}</div>
                   </div>
                   <div className={`transaction-amount ${transaction.is_repaid ? 'repaid' : ''}`}>
-                    {transaction.is_repaid ? 'Repaid' : 'Pending'}
+                    {transaction.is_repaid ? (
+                      <>
+                        <HiOutlineCheckCircle style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+                        Repaid
+                      </>
+                    ) : (
+                      <>
+                        <HiOutlineClock style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+                        Pending
+                      </>
+                    )}
                   </div>
                 </div>
               ))

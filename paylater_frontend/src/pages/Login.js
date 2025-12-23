@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
+import { HiOutlineLogin, HiOutlineUser, HiOutlineLockClosed, HiOutlineMail, HiOutlineCheckCircle } from 'react-icons/hi';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -68,9 +69,11 @@ const Login = () => {
 
   return (
     <div className="form-container">
+      <HiOutlineLogin style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--primary)' }} />
       <h2>Login to LazyPay</h2>
       {successMessage && (
         <div className="success">
+          <HiOutlineCheckCircle style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
           {successMessage}
         </div>
       )}
@@ -80,7 +83,10 @@ const Login = () => {
         <div className="form-group">
         <br />
         
-          <label>User Type</label>
+          <label>
+            <HiOutlineUser style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            User Type
+          </label>
           <select 
             name="userType" 
             value={formData.userType} 
@@ -93,7 +99,10 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <label>Email</label>
+          <label>
+            <HiOutlineMail style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Email
+          </label>
           <input
             type="email"
             name="email"
@@ -104,7 +113,10 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <label>Password</label>
+          <label>
+            <HiOutlineLockClosed style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Password
+          </label>
           <input
             type="password"
             name="password"
@@ -115,6 +127,7 @@ const Login = () => {
         </div>
 
         <button type="submit" className="btn" disabled={loading}>
+          <HiOutlineLogin style={{ marginRight: '0.5rem' }} />
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>

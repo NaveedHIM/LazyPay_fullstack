@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { HiOutlineViewGrid, HiOutlineDocumentText, HiOutlineLogin, HiOutlineUserAdd, HiOutlineLogout, HiOutlineUser } from 'react-icons/hi';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -44,16 +45,32 @@ const Navbar = () => {
         {user ? (
           <>
             <Link to={user.role === 'customer' ? '/customer/dashboard' : '/merchant/dashboard'}>
+              <HiOutlineViewGrid style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
               Dashboard
             </Link>
-            <Link to="/transactions">Transactions</Link>
-            <span>Welcome, {user.name}</span>
-            <button onClick={handleLogout}>Logout</button>
+            <Link to="/transactions">
+              <HiOutlineDocumentText style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+              Transactions
+            </Link>
+            <span>
+              <HiOutlineUser style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+              Welcome, {user.name}
+            </span>
+            <button onClick={handleLogout}>
+              <HiOutlineLogout style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+              Logout
+            </button>
           </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">
+              <HiOutlineLogin style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+              Login
+            </Link>
+            <Link to="/signup">
+              <HiOutlineUserAdd style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+              Sign Up
+            </Link>
           </>
         )}
       </div>

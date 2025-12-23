@@ -25,8 +25,6 @@ class Customer(Base):
     transaction = relationship("Transaction", back_populates="customer")
 
 
-
-
 class Transaction(Base):
     __tablename__ = "transaction"
     id = Column(Integer, primary_key=True)

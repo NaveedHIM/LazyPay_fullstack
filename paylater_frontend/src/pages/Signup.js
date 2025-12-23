@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
+import { HiOutlineUserAdd, HiOutlineUser, HiOutlineMail, HiOutlinePhone, HiOutlineCreditCard, HiOutlineLockClosed, HiOutlineCheckCircle } from 'react-icons/hi';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -100,16 +101,21 @@ const Signup = () => {
 
   return (
     <div className="form-container">
+      <HiOutlineUserAdd style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--primary)' }} />
       <h2>Sign up for LazyPay</h2>
       {error && (
         <div className={error.includes('successfully') ? 'success' : 'error'}>
+          {error.includes('successfully') && <HiOutlineCheckCircle style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />}
           {error}
         </div>
       )}
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>User Type</label>
+          <label>
+            <HiOutlineUser style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            User Type
+          </label>
           <select 
             name="userType" 
             value={formData.userType} 
@@ -122,7 +128,10 @@ const Signup = () => {
         </div>
 
         <div className="form-group">
-          <label>Full Name</label>
+          <label>
+            <HiOutlineUser style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Full Name
+          </label>
           <input
             type="text"
             name="name"
@@ -133,7 +142,10 @@ const Signup = () => {
         </div>
 
         <div className="form-group">
-          <label>Email</label>
+          <label>
+            <HiOutlineMail style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Email
+          </label>
           <input
             type="email"
             name="email"
@@ -144,7 +156,10 @@ const Signup = () => {
         </div>
 
         <div className="form-group">
-          <label>Phone Number</label>
+          <label>
+            <HiOutlinePhone style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Phone Number
+          </label>
           <input
             type="tel"
             name="phone"
@@ -156,7 +171,10 @@ const Signup = () => {
 
         {formData.userType === 'customer' && (
           <div className="form-group">
-            <label>Credit Limit</label>
+            <label>
+              <HiOutlineCreditCard style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+              Credit Limit
+            </label>
             <input
               type="number"
               name="limit"
@@ -169,7 +187,10 @@ const Signup = () => {
         )}
 
         <div className="form-group">
-          <label>Password</label>
+          <label>
+            <HiOutlineLockClosed style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Password
+          </label>
           <input
             type="password"
             name="password"
@@ -181,7 +202,10 @@ const Signup = () => {
         </div>
 
         <div className="form-group">
-          <label>Confirm Password</label>
+          <label>
+            <HiOutlineLockClosed style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />
+            Confirm Password
+          </label>
           <input
             type="password"
             name="confirmPassword"
@@ -192,6 +216,7 @@ const Signup = () => {
         </div>
 
         <button type="submit" className="btn" disabled={loading}>
+          <HiOutlineUserAdd style={{ marginRight: '0.5rem' }} />
           {loading ? 'Creating Account...' : 'Sign Up'}
         </button>
       </form>
